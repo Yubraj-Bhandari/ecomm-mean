@@ -1,0 +1,20 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="bg-white p-8 rounded-2xl shadow-md w-full max-w-md" >
+    <h2 class="text-2xl font-semibold text-center mb-6">Login</h2>
+  <form [formGroup]="loginForm">
+    <div class="mb-4">
+      <mat-form-field class="w-full">
+        <mat-label for="email">Email</mat-label>
+        <input type="text" formControlName="email" matInput placeholder="Your Email" required />
+      </mat-form-field>
+    </div>
+    <div class="mb-6">
+      <mat-form-field class="w-full">
+        <mat-label for="password">Password</mat-label>
+        <input type="password" formControlName="password" matInput placeholder="Password" required />
+      </mat-form-field>
+    </div>
+    <button mat-raised-button (click)="login()" [disabled]="loginForm.invalid">Login</button>
+  </form>
+  </div>
+</div>

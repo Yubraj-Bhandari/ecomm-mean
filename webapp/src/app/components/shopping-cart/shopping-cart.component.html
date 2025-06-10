@@ -1,0 +1,94 @@
+ <div class="container mx-auto px-4 py-8">
+  @if(orderStep==0){
+    <h1 class="text-3xl font-semibold mb-6 text-center">Your Shopping Cart</h1>
+
+  <div class="space-y-6">
+    <!-- Product Card -->
+     @for(item of cartItems;track $index){
+       <div class="flex items-center justify-between bg-white p-4 rounded shadow">
+      <div class="flex items-center space-x-4">
+        <img [src]="item.product.images[0]" alt="Product" class="w-16 h-16 rounded object-cover" />
+        <div>
+          <p class="text-lg font-medium">{{item.product.name}}</p>
+        <div class="mb-4">
+    <div class="flex items-center gap-2">
+      <span class="text-gray-500 text-sm line-through">Rs. {{ item.product.price }}</span>
+      <span class="text-orange-600 text-xs">{{ item.product.discount }}% OFF</span>
+    </div>
+    <span class="text-green-600 text-lg font-semibold">Rs. {{ sellingPrice(item.product) }}</span>
+  </div>
+  <div>Amount: Rs. {{sellingPrice(item.product) *item.quantity}}
+
+  </div>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3 ">
+        <div class="flex items-center gap-3">
+          <span class="font-bold">Quantitiy:</span>
+          <button (click)="addToCart(item.product._id!,-1)" class="bg-gray-600 text-red-50 hover:text-red-600 font-bold hover:font-bold text-lg rounded-xl p-2 shadow cursor-pointer">−</button>
+        <span class="font-bold">{{item.quantity}}</span>
+        <button (click)="addToCart(item.product._id!,1)" class="bg-gray-600  text-red-50 hover:text-red-600 font-bold hover:font-bold text-lg rounded-xl p-2 shadow cursor-pointer">+</button>
+        </div>
+        
+      </div>
+
+    </div>
+     }
+   
+
+    <!-- Summary Box -->
+    <div class="bg-white p-6 rounded shadow-md w-full md:w-1/2 mx-auto">
+      <h2 class="text-xl font-semibold mb-4">Cart Summary</h2>
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-lg font-extrabold">Total:-</span>
+        <span class="text-lg font-bold">Rs. {{totalAmount}} </span>
+      </div>
+      <button (click)="checkout()" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+        Proceed to Checkout
+      </button>
+    </div>
+  </div>
+  }@else if(orderStep==1){
+    <h1 class="text-3xl font-semibold mb-6 text-center">Your Order</h1>
+      <form class="bg-white p-8 rounded-2xl shadow-md w-full max-w-md" [formGroup]="addressForm">Address
+    <h2 class="text-2xl font-semibold text-center mb-6">Register</h2>
+    <div class="mb-4">
+      <mat-form-field class="w-full">
+        <mat-label for="name">Address1</mat-label>
+        <input type="text" formControlName="address1" matInput placeholder="address1" />
+      </mat-form-field>
+    </div>
+    <div class="mb-4">
+      <mat-form-field class="w-full">
+       <mat-label for="name">Address2</mat-label>
+        <input type="text" formControlName="address2" matInput placeholder="address2" />
+      </mat-form-field>
+    </div>
+    <div class="mb-6">
+      <mat-form-field class="w-full">
+       <mat-label for="name">City</mat-label>
+        <input type="text" formControlName="city" matInput placeholder="City" />  
+      </mat-form-field>
+    </div>
+    <div class="mb-6">
+      <mat-form-field class="w-full">
+       <mat-label for="name">PinCode</mat-label>
+        <input type="text" formControlName="pincode" matInput placeholder="pincode" />  
+      </mat-form-field>
+    </div>
+    <button mat-raised-button (click)="addAddress()">Continue</button>
+  </form>
+  }@else if (orderStep==2){
+    <h1 class="text-3xl font-bold mb-4">Select Payment Method</h1>
+    <div class="px-30 shadow">
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="paymentType">
+  <mat-radio-button value="cash">Cash</mat-radio-button>
+  <mat-radio-button value="card" [disabled]="true">Card</mat-radio-button>
+</mat-radio-group>
+<button class="mt-20" mat-raised-button (click)="completeOrder()">Continue</button>
+
+    </div>
+  }
+  
+</div>

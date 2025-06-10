@@ -1,0 +1,56 @@
+
+<div 
+  class="w-full max-w-xs p-4 shadow-lg border rounded-md bg-white hover:shadow-xl transition cursor-pointer relative" 
+ 
+>
+  <img 
+    [src]="product.images[0]" 
+    alt="Product Image"
+    class="w-full h-52 object-cover rounded-md mb-3"
+     [routerLink]="'/product/' + product._id"
+  >
+<div   [routerLink]="'/product/' + product._id">
+  <h5 class="text-lg font-semibold mb-2">{{ product.name }}</h5>
+  <p class="text-gray-600 text-sm mb-4">{{ product.shortDescription }}</p>
+
+  <!-- Price section -->
+  <div class="mb-4">
+    <div class="flex items-center gap-2">
+      <span class="text-gray-500 text-sm line-through">Rs. {{ product.price }}</span>
+      <span class="text-orange-500 text-xs">{{ product.discount }}% OFF</span>
+    </div>
+    <span class="text-green-600 text-lg font-semibold">Rs. {{ sellingPrice }}</span>
+  </div>
+</div>
+  <!-- Button should NOT be inside [routerLink] -->
+</div>
+
+<!-- Button is outside the routerLink so it's not affected -->
+<button mat-fab color="warn" (click)="addToWishList(product)">
+
+@if(isInWishList(product)){
+  <mat-icon>
+ favorite
+  </mat-icon>
+}@else {
+  <mat-icon>
+  favorite_border
+</mat-icon>
+}
+
+ </button>
+
+<button mat-fab color="primary" (click)="addToCart(product)">
+  @if(isProductInCart(product._id!)){
+<mat-icon>
+    remove_shopping_cart
+ </mat-icon> 
+   }@else{
+ <mat-icon>
+    shopping_cart
+ </mat-icon>
+   }
+ 
+  
+ </button>
+

@@ -1,0 +1,50 @@
+<header class="header">
+  <!-- Top Line -->
+  <div class="header__top">
+    <div class="header__logo cursor-pointer" routerLink="/">
+      <!-- <img src="assets/logo.png" alt="Logo" /> -->
+      <span>MyStore</span>
+    </div>
+
+    <div class="header__search">
+      <input type="text" placeholder="Search for products..." (keyup.enter)="onSearch($event)"
+      [(ngModel)]="searchTerm"
+      />
+    </div>
+
+    <div class="header__profile flex gap-3 items-center">
+      @if (authService.isAdmin) {
+        <a routerLink="/admin">{{ authService.userName }}</a>
+      } @else {
+        <a routerLink="/profile">{{ authService.userName }}</a>
+      }
+
+      @if (authService.isLoggedIn ) {
+        @if(!authService.isAdmin){
+        <a routerLink="/wishlists"><mat-icon>favorite</mat-icon></a>
+        <a routerLink="/cart"><mat-icon>shopping_cart</mat-icon></a>
+        <a routerLink="/orders">Orders</a>
+        }
+        <a (click)="logout()" class="cursor-pointer">Logout</a>
+      } @else {
+        <a routerLink="/login" routerLinkActive="router-link-active" class="cursor-pointer">Log In</a>
+        <a routerLink="/register" routerLinkActive="router-link-active" class="cursor-pointer">Register</a>
+      }
+    </div>
+  </div>
+
+  @if (authService.isLoggedIn) {
+    <!-- Category Menu -->
+    <nav class="header__menu">
+      <ul>
+        @for (category of categoryList; track $index) {
+          <li>
+            <a (click)="searchCategory(category._id!)" class="cursor-pointer">
+              {{ category.name }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+  }
+</header>
