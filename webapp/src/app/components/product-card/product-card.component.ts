@@ -52,11 +52,16 @@ addToCart(product:Product){
       })
     }
 }
-isProductInCart(productId:string){
-  if(this.cartService.items.find(result => result.product._id == productId)) 
-    {return true}
-  else {return false}
+// isProductInCart(productId:string){
+//   if(this.cartService.items.find(result => result.product._id == productId)) 
+//     {return true}
+//   else {return false}
+// }
+isProductInCart(productId: string): boolean {
+  if (!this.cartService.items) {
+    return false; // Return false if items array is not initialized
+  }
+  return this.cartService.items.some(result => result?.product?._id === productId);
 }
-
 
 }
